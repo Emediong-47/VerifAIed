@@ -50,7 +50,7 @@ packages:
     source: hosted
     version: "2.13.1"
   auto_route:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: auto_route
       sha256: "538d8eb2ffc48de30abb30d4545a90405b5f8a29248b82d5e4b2977a79bfd229"
