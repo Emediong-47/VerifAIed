@@ -12,7 +12,7 @@ import 'package:verif_aled/app/app_main.dart';
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const AppMain());
+    await tester.pumpWidget(AppMain());
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

@@ -28,18 +28,50 @@ class CaptureDocumentRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [DocumentVerificationPage]
-class DocumentVerificationRoute extends PageRouteInfo<void> {
-  const DocumentVerificationRoute({List<PageRouteInfo>? children})
-    : super(DocumentVerificationRoute.name, initialChildren: children);
+class DocumentVerificationRoute
+    extends PageRouteInfo<DocumentVerificationRouteArgs> {
+  DocumentVerificationRoute({
+    Key? key,
+    required String imagePath,
+    List<PageRouteInfo>? children,
+  }) : super(
+         DocumentVerificationRoute.name,
+         args: DocumentVerificationRouteArgs(key: key, imagePath: imagePath),
+         initialChildren: children,
+       );
 
   static const String name = 'DocumentVerificationRoute';
 
   static PageInfo page = PageInfo(
     name,
     builder: (data) {
-      return const DocumentVerificationPage();
+      final args = data.argsAs<DocumentVerificationRouteArgs>();
+      return DocumentVerificationPage(key: args.key, imagePath: args.imagePath);
     },
   );
+}
+
+class DocumentVerificationRouteArgs {
+  const DocumentVerificationRouteArgs({this.key, required this.imagePath});
+
+  final Key? key;
+
+  final String imagePath;
+
+  @override
+  String toString() {
+    return 'DocumentVerificationRouteArgs{key: $key, imagePath: $imagePath}';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! DocumentVerificationRouteArgs) return false;
+    return key == other.key && imagePath == other.imagePath;
+  }
+
+  @override
+  int get hashCode => key.hashCode ^ imagePath.hashCode;
 }
 
 /// generated route for

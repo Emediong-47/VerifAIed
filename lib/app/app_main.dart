@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:verif_aled/app/routes/app_router.dart';
 
 class AppMain extends StatelessWidget {
-  const AppMain({super.key});
+  AppMain({super.key});
+
+  final _appRouter = AppRouter();
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router();
+    return MaterialApp.router(
+      routerConfig: _appRouter.config(),
+      title: 'VerifAIed',
+    );
   }
 }

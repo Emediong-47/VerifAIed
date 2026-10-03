@@ -3,5 +3,5 @@ import 'package:verif_aled/app/app_main.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const AppMain());
+  runApp(AppMain());
 }
