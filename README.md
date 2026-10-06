@@ -11,15 +11,16 @@ The application guides users through a structured identity verification process,
 * **Personal Information Collection** – Collects essential user details required for identity verification.
 * **Identity Document Verification** – Allows users to select and capture supported identity documents.
 * **AI-Powered Document Processing** – Uses machine learning capabilities to analyse and extract information from identity documents.
-* **Liveness Detection** – Guides users through facial movements such as looking up, looking down, turning right, turning left, and opening the mouth to help determine whether the verification is being performed by a live person.
+* **Liveness Detection** – Guides users through facial movements such as looking up, looking down, turning right, turning left, and smiling to help determine whether the verification is being performed by a live person.
 * **Face Verification** – Captures and verifies the user's face as part of the identity verification process.
 * **Verification Result** – Presents the outcome of the verification process to the user.
 * **Personalised User Experience** – Provides a personalised welcome experience after successful verification.
+* **Stay Signed In** – Keeps the verified identity on the device so returning users go straight to their welcome page, with a log out option to start the process again.
 
 ## 🛠️ Technologies Used
 
 * **Flutter & Dart** – Cross-platform mobile application development.
-* **Firebase** – Backend services and application integration.
+* **SQLite (sqflite)** – On-device persistence of the verified identity.
 * **Google ML Kit** – Machine learning capabilities for mobile-based document and face-related processing.
 * **BLoC** – State management and separation of application logic from the user interface.
 * **AutoRoute** – Type-safe navigation and route management.
@@ -48,6 +49,8 @@ Face Verification
 Verification Result
    ↓
 Personalised Welcome
+   ↓
+Log Out (returns to Welcome)
 ```
 
 ## 🏗️ Architecture
@@ -58,7 +61,7 @@ The application is organised around key layers such as:
 
 * **Domain** – Contains core business logic and entities.
 * **Application** – Handles application-specific logic and state management.
-* **Infrastructure** – Handles external services, APIs, Firebase, and other implementations.
+* **Infrastructure** – Handles external services, APIs, the SQLite database, and other implementations.
 * **Presentation** – Contains screens, widgets, and user interface components.
 
 ## 🎯 Project Goal
@@ -76,8 +79,7 @@ Before running the project, ensure you have:
 * Flutter SDK installed
 * Dart SDK installed
 * Android Studio or another Flutter-compatible IDE
-* An Android device or emulator
-* A configured Firebase project
+* An Android device or emulator (Android 8.0 / API 26 or later), or an iPhone running iOS 15.5 or later
 
 ### Installation
 

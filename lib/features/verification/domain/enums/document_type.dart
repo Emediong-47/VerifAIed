@@ -1,5 +1,9 @@
 enum DocumentType {
-  nin,
-  studentId,
-  votersCard
+  nin('NIN'),
+  studentId('Student ID Card'),
+  votersCard("Voter's Card");
+
+  const DocumentType(this.label);
+
+  final String label;
 }

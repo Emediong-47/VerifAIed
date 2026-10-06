@@ -1,7 +1,8 @@
-import 'dart:io';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class DocumentImage {
-  DocumentImage({required this.image});
+part 'document_image_object.freezed.dart';
 
-  final File image;
+@freezed
+abstract class DocumentImage with _$DocumentImage {
+  const factory DocumentImage({required String path}) = _DocumentImage;
 }

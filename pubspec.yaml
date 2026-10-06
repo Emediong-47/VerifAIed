@@ -2,7 +2,7 @@ name: verif_aled
 description: "An AI-aided KYC (Know Your Customer) verification"
 publish_to: 'none'
 
-version: 1.0.0+1
+version: 5.0.0+5
 
 environment:
   sdk: ^3.12.0
@@ -20,19 +20,34 @@ dependencies:
   freezed_annotation: ^3.1.0
   auto_route: ^11.2.0
   flutter_steps: ^2.0.1
-  google_ml_kit: ^0.23.1
-
+  google_mlkit_text_recognition: ^0.17.1
+  google_mlkit_face_detection: ^0.15.1
+  tflite_flutter: ^0.12.1
+  image: ^4.10.1
+  sqflite: ^2.4.4+1
+  path: ^1.9.1
+  path_provider: ^2.1.6
+  lottie: ^3.6.1
+  flutter_tts: ^4.2.5
+  flutter_native_splash: ^2.4.8
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
-  freezed: ^4.0.0-dev.3
+  freezed: ^3.2.0
   build_runner: ^2.15.1
   auto_route_generator: ^10.6.0
   injectable_generator: ^3.1.3
+  mocktail: ^1.0.5
+  sqflite_common_ffi: ^2.4.3
+  flutter_launcher_icons: ^0.14.4
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/models/mobilefacenet.tflite
+    - assets/animations/
 
   # To add assets to your application, add an assets section, like this:
   # assets:
@@ -64,3 +79,27 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
+# App icon artwork lives in assets/icon. Regenerate the platform icons with:
+#   dart run flutter_launcher_icons
+flutter_launcher_icons:
+  image_path: assets/icon/app_icon.png
+  android: true
+  ios: true
+  remove_alpha_ios: true
+  min_sdk_android: 26
+  adaptive_icon_background: assets/icon/app_icon_background.png
+  adaptive_icon_foreground: assets/icon/app_icon_foreground.png
+  adaptive_icon_monochrome: assets/icon/app_icon_monochrome.png
+
+# Native launch screen, shown until the app knows who is signed in.
+# Regenerate with:  dart run flutter_native_splash:create
+flutter_native_splash:
+  color: "#0A7466"
+  image: assets/icon/splash_logo.png
+  android_12:
+    color: "#0A7466"
+    image: assets/icon/splash_logo_android12.png
+  android: true
+  ios: true
+  web: false

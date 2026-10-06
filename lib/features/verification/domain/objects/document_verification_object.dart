@@ -1,17 +1,33 @@
-import 'package:verif_aled/features/verification/domain/enums/document_type.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class DocumentVerification {
-  DocumentVerification({
-    required this.documentTypeValid,
-    required this.text,
-    required this.isNameMatch,
-    required this.isDateOfBirthMatch,
-    required this.isSuccessful,
-  });
+part 'document_verification_object.freezed.dart';
 
-  final DocumentType documentTypeValid;
-  final String text;
-  final bool isNameMatch;
-  final bool isDateOfBirthMatch;
-  final bool isSuccessful;
+@freezed
+abstract class DocumentVerification with _$DocumentVerification {
+  const DocumentVerification._();
+
+  const factory DocumentVerification({
+    required bool isDocumentTypeMatch,
+    required bool isNameMatch,
+    required bool isDateOfBirthMatch,
+
+    /// Whether the holder's photo on the document shows a detectable face,
+    /// which the face match later depends on.
+    required bool isFaceDetected,
+    DateTime? extractedDateOfBirth,
+    required String rawText,
+  }) = _DocumentVerification;
+
+  /// Not every document prints a date of birth, so a missing one is not held
+  /// against the user. One that is found must still match.
+  bool get isDateOfBirthFound => extractedDateOfBirth != null;
+
+  bool get isSuccessful =>
+      isDocumentTypeMatch &&
+      isNameMatch &&
+      (isDateOfBirthMatch || !isDateOfBirthFound) &&
+      isFaceDetected;
+
+  /// Passed without confirming the date of birth.
+  bool get hasWarning => isSuccessful && !isDateOfBirthFound;
 }

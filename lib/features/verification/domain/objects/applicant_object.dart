@@ -1,8 +1,10 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:verif_aled/features/verification/domain/objects/name_object.dart';
 
-class Applicant{
-  Applicant({required this.name, required this.dateOfBirth});
+part 'applicant_object.freezed.dart';
 
-  final Name name;
-  final DateTime dateOfBirth;
+@freezed
+abstract class Applicant with _$Applicant {
+  const factory Applicant({required Name name, required DateTime dateOfBirth}) =
+      _Applicant;
 }

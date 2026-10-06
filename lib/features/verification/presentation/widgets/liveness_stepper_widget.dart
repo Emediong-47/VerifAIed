@@ -1,25 +1,36 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_steps/flutter_steps.dart';
-import 'package:verif_aled/app/routes/app_router.dart';
+import 'package:verif_aled/features/verification/domain/objects/liveness_check_object.dart';
 
+/// Shows progress through the liveness challenges, then the final
+/// hold-still step.
 class LivenessStepperWidget extends StatefulWidget {
-  const LivenessStepperWidget({super.key});
+  const LivenessStepperWidget({super.key, required this.check});
+
+  final LivenessCheck check;
 
   @override
   State<LivenessStepperWidget> createState() => _LivenessStepperWidgetState();
 }
 
 class _LivenessStepperWidgetState extends State<LivenessStepperWidget> {
-  String? _title;
-  final _stepController = FlutterStepsController(initialStep: 0);
-  final _steps = [
-    Steps(title: 'Look Left', subtitle: 'Step 1'),
-    Steps(title: 'Look Right', subtitle: 'Step 2'),
-    Steps(title: 'Look Up', subtitle: 'Step 3'),
-    Steps(title: 'Look Down', subtitle: 'Step 4'),
-    Steps(title: 'Open Mouth', subtitle: 'Step 5'),
-  ];
+  late final _stepController = FlutterStepsController(
+    initialStep: _currentStep,
+  );
+
+  static const holdStillLabel = 'Hold still';
+
+  int get _stepCount => widget.check.challenges.length + 1;
+
+  // Once every challenge is done, the hold-still step is current.
+  int get _currentStep =>
+      widget.check.completedChallenges.length.clamp(0, _stepCount - 1);
+
+  @override
+  void didUpdateWidget(covariant LivenessStepperWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _stepController.jumpTo(_currentStep, _stepCount);
+  }
 
   @override
   void dispose() {
@@ -27,56 +38,23 @@ class _LivenessStepperWidgetState extends State<LivenessStepperWidget> {
     super.dispose();
   }
 
-  void _completeCurrentAction() {
-    _stepController.next(_steps.length);
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(16),
-          child: FlutterSteps(
-            steps: _steps,
-            controller: _stepController,
-            direction: Axis.horizontal,
-            showSubtitle: false,
-            showCounter: true,
-            showStepLine: true,
-            titleFontSize: 10,
-            leadingSize: 28,
-            onStepChanged: (step) {
-              setState(() {});
-            },
-          ),
-        ),
+    final challenges = widget.check.challenges;
 
-        const Spacer(),
-
-        Text(
-          'Look Left',
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-        ),
-
-        const SizedBox(height: 20),
-
-        Container(
-          height: 350,
-          width: double.infinity,
-          color: Colors.black12,
-          child: const Center(child: Text('Camera Preview')),
-        ),
-
-        const Spacer(),
-
-        ElevatedButton(
-          onPressed: () => context.router.push(VerificationResultRoute()),
-          child: const Text('Completed'),
-        ),
-
-        const SizedBox(height: 30),
+    return FlutterSteps(
+      steps: [
+        for (final (index, action) in challenges.indexed)
+          Steps(title: action.label, subtitle: 'Step ${index + 1}'),
+        Steps(title: holdStillLabel, subtitle: 'Step ${challenges.length + 1}'),
       ],
+      controller: _stepController,
+      direction: Axis.horizontal,
+      showSubtitle: false,
+      showCounter: true,
+      showStepLine: true,
+      titleFontSize: 10,
+      leadingSize: 28,
     );
   }
 }
